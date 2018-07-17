@@ -1,27 +1,9 @@
 const webpack = require('webpack');
 const fs = require('fs');
 const path = require('path');
-const WebpackHtmlPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-let htmlArr = fs.readdirSync(path.resolve(__dirname, 'src/html'));
-
-let entrys = {};
-
-let htmlPlugins = [];
-
-for(var item of htmlArr){
-	let name = item.split('.html')[0];
-	htmlPlugins.push(new WebpackHtmlPlugin({
-		filename: item,
-		template: path.resolve(__dirname, `src/html/${item}`),
-		chunks: ['common', name]
-	}));
-	entrys[name] = `./src/js/${name}.js`;
-};
-
 module.exports = {
-	entry: entrys,
 	output: {
 		filename: '[name].[chunkhash].js',
 		chunkFilename: '[name].[chunkhash].js',
@@ -29,7 +11,7 @@ module.exports = {
 	},
 	resolve: {
 		alias: {
-			'@': path.resolve(__dirname, 'src');
+			'@': path.resolve(__dirname, 'src')
 		}
 	},
 	module: {
@@ -37,16 +19,22 @@ module.exports = {
 			{
 				test: /\.js$/,
 				loader: 'babel-loader',
-				include: path.resolve(__dirname, 'src'); 
+				include: path.resolve(__dirname, 'src/js')
 			},
 			{
 				test: /\.css$/,
-				use: ["style-loader", "css-loader", "postcss-loader"]
-			}
+				use: ["style-loader", "css-loader"]
+			},
+			{
+				test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+				loader: 'url-loader',
+				options: {
+					limit: 10000,
+				}
+			},
 		]
 	},
 	plugins: [
-		...htmlPlugins,
 		new CleanWebpackPlugin(['dist'])
 	]
 };
