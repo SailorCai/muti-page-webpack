@@ -23,7 +23,8 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				use: ["style-loader", "css-loader"]
+				use: ["style-loader", "css-loader"],
+				include: path.resolve(__dirname, 'src/css')
 			},
 			{
 				test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -34,7 +35,14 @@ module.exports = {
 			},
 		]
 	},
+	optimization: {
+		//用于分离公共js模块
+		splitChunks: {
+			chunks: 'all',
+			name: 'common'
+		}
+	},
 	plugins: [
-		new CleanWebpackPlugin(['dist'])
+		new CleanWebpackPlugin(['dist']),
 	]
 };

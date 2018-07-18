@@ -25,7 +25,7 @@ module.exports = merge(base, {
 		contentBase: path.join(__dirname, "dist"),
 		compress: true,
 		port: 8080,
-		hot: true,
+		//hot: true,
 		index: 'index.html',
 		open: true
 	},

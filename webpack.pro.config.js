@@ -14,9 +14,9 @@ let htmlPlugins = [];
 for(let item of htmlArr){
 	let name = item.split('.html')[0];
 	htmlPlugins.push(new WebpackHtmlPlugin({
-		filename: `${item}.[chunkhash].html`,
+		filename: `${name}.[chunkhash].html`,
 		template: path.resolve(__dirname, `src/html/${item}`),
-		chunks: ['common', name]
+		chunks: ['common', name],
 		inject: true,
 		minify: {
 			removeComments: true,
@@ -42,10 +42,6 @@ module.exports = merge(base, {
 			//生产环境默认不使用source-map
 			//sourceMap: "#source-map",
 			parallel: true
-		}),
-		new ExtractTextPlugin({
-			filename: 'css/[name].[contenthash].css',
-			allChunks: true,
 		}),
 	]
 });
