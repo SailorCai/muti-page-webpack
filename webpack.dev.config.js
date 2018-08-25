@@ -14,7 +14,7 @@ for(let item of htmlArr){
 	let name = item.split('.html')[0];
 	htmlPlugins.push(new WebpackHtmlPlugin({
 		filename: item,
-		template: path.resolve(__dirname, `src/html/${item}`),
+		template: 'html-withimg-loader!'+path.resolve(__dirname, `src/html/${item}`),
 		//common代表公共模块，name就是html对应的同名js文件
 		//这个配置将会自动在生成的html中插入你指定的js
 		chunks: ['common', name]

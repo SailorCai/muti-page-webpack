@@ -5,6 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
 	output: {
+		//publicPath: path.resolve(__dirname, 'dist'),
 		filename: '[name].[chunkhash].js',
 		chunkFilename: '[name].[chunkhash].js',
 		path: path.resolve(__dirname, 'dist')
@@ -30,7 +31,8 @@ module.exports = {
 				test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
 				loader: 'url-loader',
 				options: {
-					limit: 10000,
+					limit: 10,
+					name: 'img/[name].[hash:7].[ext]'
 				}
 			},
 		]
