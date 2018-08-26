@@ -1,12 +1,12 @@
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const WebpackHtmlPlugin = require('html-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
 const base = require('./webpack.base.config.js');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-let htmlArr = fs.readdirSync(path.resolve(__dirname, 'src/html'));
+let htmlArr = fs.readdirSync(path.resolve(__dirname, '../src/html'));
 
 let entrys = {};
 let htmlPlugins = [];
@@ -14,9 +14,9 @@ let htmlPlugins = [];
 for(let item of htmlArr){
 	let name = item.split('.html')[0];
 	htmlPlugins.push(new WebpackHtmlPlugin({
-		filename: `${name}.[chunkhash].html`,
-		template: path.resolve(__dirname, `src/html/${item}`),
-		chunks: ['common', name],
+		filename: item,
+		template: 'html-withimg-loader!'+path.resolve(__dirname, `../src/html/${item}`),
+		chunks: ['js/common', name],
 		inject: true,
 		minify: {
 			removeComments: true,
@@ -30,9 +30,13 @@ for(let item of htmlArr){
 };
 
 module.exports = merge(base, {
+	mode: 'production',
 	entry: entrys,
 	plugins: [
 		...htmlPlugins,
+		new webpack.DefinePlugin({
+			'process.env': {NODE_ENV: '"production"'}
+		}),
 		new UglifyJsPlugin({
 			uglifyOptions: {
 				compress: {
