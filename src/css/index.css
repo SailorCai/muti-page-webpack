@@ -1,7 +1,9 @@
 .box {
-	background:pink;
 	width:200px;
+	color:red;
 	height:200px;
 	text-align:center;
 	line-height:200px;
+	background-image:url(../img/webpack.jpg);
+	background-size:cover;
 }
