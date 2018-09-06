@@ -37,15 +37,19 @@ module.exports = merge(base, {
 		new webpack.DefinePlugin({
 			'process.env': {NODE_ENV: '"production"'}
 		}),
-		new UglifyJsPlugin({
-			uglifyOptions: {
-				compress: {
-					warnings: false
-				}
-			},
-			//生产环境默认不使用source-map
-			//sourceMap: "#source-map",
-			parallel: true
-		}),
-	]
+	],
+	optimization: {
+	    minimizer: [
+	        new UglifyJsPlugin({
+				uglifyOptions: {
+					compress: {
+						warnings: false
+					}
+				},
+				//生产环境默认不使用source-map
+				//sourceMap: "#source-map",
+				parallel: true
+	        })
+	    ]
+	}
 });

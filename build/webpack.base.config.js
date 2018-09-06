@@ -27,7 +27,10 @@ module.exports = {
 			{
 				test: /\.js$/,
 				loader: 'babel-loader',
-				include: resolve('src/js')
+				include: resolve('src/js'),
+				options: {
+					presets: ['env']
+				}
 			},
 			{
 				test: /\.(sa|sc|c)ss$/,
@@ -39,8 +42,8 @@ module.exports = {
 						}
 					},
 					'css-loader',
+					'sass-loader',
 					//'postcss-loader',
-					//'sass-loader'
 				]
 			},
 			{
